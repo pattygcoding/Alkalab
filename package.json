@@ -1,0 +1,24 @@
+{
+  "name": "alkalab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Alkalab - a falling-sand chemistry lab written in Rust and compiled to WebAssembly",
+  "keywords": ["wasm", "rust", "simulation", "cellular-automata", "falling-sand", "chemistry"],
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "bundle": "node scripts/bundle.mjs",
+    "serve": "node scripts/serve.mjs",
+    "start": "npm run build && npm run serve",
+    "test": "cargo test",
+    "test:wasm": "node tests/wasm/smoke.mjs",
+    "test:dom": "node tests/dom/main.test.mjs",
+    "test:js": "npm run test:wasm && npm run test:dom",
+    "lint": "cargo clippy --all-targets -- -D warnings",
+    "fmt": "cargo fmt --all --check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

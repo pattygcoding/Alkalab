@@ -1,0 +1,73 @@
+name: Deploy
+
+# Builds the wasm package, runs the native test suite, and publishes web/ to
+# GitHub Pages. Enable Pages once in the repository settings with
+# "Source: GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+      - name: Lint
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Test the simulation core natively
+        run: cargo test --all-targets
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - name: Build for the web (web/pkg/alkalab.wasm)
+        run: node scripts/build.mjs
+
+      - name: Smoke test the wasm module in Node
+        run: node tests/wasm/smoke.mjs
+
+      - name: Front-end test (DOM stub)
+        run: node tests/dom/main.test.mjs
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
