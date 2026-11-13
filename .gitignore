@@ -1,20 +1,5 @@
-# Rust / Cargo
-/target
-**/*.rs.bk
-
-# Generated WebAssembly package (produced by `npm run build`)
-/web/pkg/
-
-# Copy of the runtime files for a portfolio / static host (`npm run bundle`)
-/dist/
-
-# Locally downloaded tooling (wasm-pack & friends)
-/tools/
-
-# Node
-node_modules/
-
-# Nim / wasm build outputs (nim/ subfolder)
+# Nim compiler output
+.nim_runtime/
 nim/nimcache/
 nim/src/*.wasm
 nim/tests/*.exe
@@ -22,7 +7,12 @@ nim/tests/*.pdb
 nim/tests/*.ilk
 nim/tests/*.dSYM
 nim/tests/*.o
+
+# Generated browser bundle (copied from web/ by nim/build.mjs)
 nim/web/
+
+# Node
+node_modules/
 
 # Editors / OS
 .vscode/

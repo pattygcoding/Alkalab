@@ -1,7 +1,7 @@
 name: Deploy
 
-# Builds the wasm package, runs the native test suite, and publishes web/ to
-# GitHub Pages. Enable Pages once in the repository settings with
+# Builds the Nim wasm package, runs the native test suite, and publishes
+# nim/web/ to GitHub Pages. Enable Pages once in the repository settings with
 # "Source: GitHub Actions".
 
 on:
@@ -20,46 +20,33 @@ concurrency:
 
 jobs:
   build:
-    name: Build and test
+    name: Build and test (Nim)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Nim
+        uses: jiro4989/setup-nim-action@v2
         with:
-          targets: wasm32-unknown-unknown
-          components: rustfmt, clippy
+          nim-version: '2.2.0'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: Swatinem/rust-cache@v2
-
-      - name: Check formatting
-        run: cargo fmt --all --check
-
-      - name: Lint
-        run: cargo clippy --all-targets -- -D warnings
+      - name: Install clang and lld
+        run: sudo apt-get update && sudo apt-get install -y clang lld
 
       - name: Test the simulation core natively
-        run: cargo test --all-targets
+        run: nim c -r --hints:off --warnings:off nim/tests/alkalab_tests.nim
 
-      - name: Install wasm-pack
-        uses: taiki-e/install-action@v2
-        with:
-          tool: wasm-pack
-
-      - name: Build for the web (web/pkg/alkalab.wasm)
-        run: node scripts/build.mjs
+      - name: Build for the web (nim/web/pkg/alkalab.wasm)
+        run: node nim/build.mjs
 
       - name: Smoke test the wasm module in Node
-        run: node tests/wasm/smoke.mjs
-
-      - name: Front-end test (DOM stub)
-        run: node tests/dom/main.test.mjs
+        run: node nim/tests/wasm_smoke.mjs
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: nim/web
 
   deploy:
     name: Deploy to Pages

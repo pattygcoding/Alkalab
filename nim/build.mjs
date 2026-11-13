@@ -142,20 +142,6 @@ for (const file of ['index.html', 'main.js', 'style.css']) {
   const to = path.join(webDir, file);
   if (!fs.existsSync(from)) continue;
   fs.copyFileSync(from, to);
-  if (file === 'index.html') {
-    let html = fs.readFileSync(to, 'utf8');
-    html = html
-      .replaceAll('Rust + WebAssembly', 'Nim + WebAssembly')
-      .replaceAll('written in Rust', 'written in Nim')
-      .replaceAll('Rust cellular automaton', 'Nim cellular automaton')
-      .replaceAll('Rust renders straight into a', 'Nim renders straight into a')
-      .replaceAll('Built with Rust + <code>wasm-bindgen</code>', 'Built with Nim + <code>wasm</code>')
-      .replaceAll('<code>std</code> Rust', 'Nim <code>std</code>')
-      .replaceAll('<code>cargo test</code>', '<code>nim c -r</code>');
-    fs.writeFileSync(to, html);
-  } else if (file === 'main.js') {
-    fs.writeFileSync(to, fs.readFileSync(to, 'utf8').replaceAll('Rust', 'Nim'));
-  }
 }
 
 const bytes = fs.statSync(path.join(pkgDir, 'alkalab.wasm')).size;

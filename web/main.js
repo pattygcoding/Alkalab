@@ -1,7 +1,7 @@
 // Alkalab - the browser half.
 //
 // JavaScript owns the DOM, the input events and the requestAnimationFrame loop.
-// Rust owns the state buffer, the physics and the pixels. The only thing that
+// Nim owns the state buffer, the physics and the pixels. The only thing that
 // crosses the boundary per frame is a pointer: the RGBA buffer lives inside wasm
 // linear memory and is handed straight to `putImageData`.
 
@@ -23,7 +23,7 @@ const idOf = (name) => byName.get(name).id;
 const canvas = document.getElementById('lab');
 const ctx = canvas.getContext('2d', { alpha: false });
 
-// The wasm heap can grow (allocating any String from Rust may move it), and
+// The wasm heap can grow (allocating any String from Nim may move it), and
 // growing detaches the old ArrayBuffer, so rebuild the view when that happens.
 let pixelBuffer = null;
 let pixels = null;

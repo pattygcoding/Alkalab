@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Alkalab - a falling-sand chemistry lab in Rust + WebAssembly</title>
+    <title>Alkalab - a falling-sand chemistry lab in Nim + WebAssembly</title>
     <meta
       name="description"
-      content="Alkalab is a cellular-automata chemistry sandbox written in Rust and compiled to WebAssembly: sodium explodes in water, carbide makes acetylene, lava fuses sand into glass."
+      content="Alkalab is a cellular-automata chemistry sandbox written in Nim and compiled to WebAssembly: sodium explodes in water, carbide makes acetylene, lava fuses sand into glass."
     />
     <link rel="stylesheet" href="./style.css" />
     <link
@@ -18,7 +18,7 @@
     <header class="topbar">
       <h1>Alkal<span>ab</span></h1>
       <p class="tagline">
-        A powder-sand <em>chemistry</em> lab: Rust cellular automaton,
+        A powder-sand <em>chemistry</em> lab: Nim cellular automaton,
         WebAssembly, zero-copy canvas. Drop sodium in water and stand back.
       </p>
       <div class="hud" id="hud">
@@ -110,7 +110,7 @@
               on it, mercury sinks through both - one rule, no per-element code.
             </li>
             <li>
-              <b>Zero-copy pixels.</b> Rust renders straight into a
+              <b>Zero-copy pixels.</b> Nim renders straight into a
               <code>Uint8ClampedArray</code> view of wasm memory;
               JavaScript hands that buffer to
               <code>putImageData</code>. No data crosses the boundary per frame.
@@ -129,8 +129,8 @@
 
     <footer class="footer">
       <span>
-        Built with Rust + <code>wasm-bindgen</code>. The simulation core is plain
-        <code>std</code> Rust and is unit tested natively with <code>cargo test</code>.
+        Built with Nim + <code>wasm</code>. The simulation core is plain Nim and
+        is unit tested natively with <code>nim c -r</code>.
       </span>
     </footer>
 

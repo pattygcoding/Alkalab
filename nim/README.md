@@ -5,9 +5,11 @@ engine is split into focused modules under `src/alkalab/`, runs natively for
 tests, and compiles to a standalone `wasm32-unknown-unknown` module that the
 existing browser front end drives through a small generated ES module.
 
-The original Rust project in the repository root is untouched. This folder is
-the Nim implementation. The build here is what the Arcade-PG-Website `/alkalab`
-page serves, copied into `public/wasm/alkalab.js` and `alkalab.wasm`.
+This repository is the Nim implementation. The original Rust + wasm-bindgen
+version is preserved at
+[alkalab-legacy](https://github.com/pattygcoding/alkalab-legacy). The build here
+is what the Arcade-PG-Website `/alkalab` page serves, copied into
+`public/wasm/alkalab.js` and `alkalab.wasm`.
 
 ## What is implemented
 
@@ -31,8 +33,8 @@ page serves, copied into `public/wasm/alkalab.js` and `alkalab.wasm`.
 * clang with the `wasm32-unknown-unknown` target and `wasm-ld`
 * Node 18 or newer (for the smoke test and the static server)
 
-On Windows the Nim distribution ships clang; make sure its `bin` directory is
-on `PATH`.
+Make sure the clang + `wasm-ld` toolchain's `bin` directory is on `PATH` (the
+Windows Nim distribution can include one).
 
 ## Build
 
