@@ -1,0 +1,16 @@
+# Nim compiler output
+nimcache/
+*.wasm
+
+# Generated browser bundle (copied from the shared web/ folder by build.mjs)
+web/index.html
+web/main.js
+web/style.css
+web/pkg/
+
+# Compiled native test binaries
+tests/*.exe
+tests/*.pdb
+tests/*.ilk
+tests/*.dSYM
+tests/*.o

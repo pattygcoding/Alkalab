@@ -14,6 +14,16 @@
 # Node
 node_modules/
 
+# Nim / wasm build outputs (nim/ subfolder)
+nim/nimcache/
+nim/src/*.wasm
+nim/tests/*.exe
+nim/tests/*.pdb
+nim/tests/*.ilk
+nim/tests/*.dSYM
+nim/tests/*.o
+nim/web/
+
 # Editors / OS
 .vscode/
 .idea/

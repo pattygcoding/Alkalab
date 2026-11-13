@@ -328,6 +328,20 @@ invariants).
 **A new reaction** is one entry in `REACTIONS` in `src/reaction.rs` - the pair
 lookup, the reverse direction and the UI log line are all derived from it.
 
+## Nim port
+
+`nim/` is a self-contained Nim rewrite of the same engine. It compiles to a
+standalone `wasm32-unknown-unknown` module (no wasm-bindgen) and is what the
+arcade's `/alkalab` page serves. Build and test it with:
+
+```powershell
+node nim/build.mjs
+node nim/tests/wasm_smoke.mjs
+nim c -r --hints:off --warnings:off nim/tests/alkalab_tests.nim
+```
+
+See [`nim/README.md`](nim/README.md) for the module layout and browser API.
+
 ## Project layout
 
 ```
